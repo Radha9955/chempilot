@@ -98,6 +98,8 @@ class SubGroupMasterController extends Controller
 }
 
 
+
+
     public function destroy(SubGroupMaster $subgroupmaster)
     {
         $subgroupmaster->delete();
