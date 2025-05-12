@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GroupMasterController;
 use App\Http\Controllers\SubGroupMasterController;
+use App\Http\Controllers\ItemMasterController;
 
 Route::get('/', function () {
     return view('welcome');
