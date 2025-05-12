@@ -7,6 +7,10 @@
 
     <!-- Bootstrap CSS (optional) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Add FontAwesome CDN to your layout -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    
 
     <!-- Custom CSS -->
     <style>
@@ -18,7 +22,7 @@
 <body>
 
     <div class="container">
-        <h1 class="mb-4">Warehouse Management</h1>
+        <h1 class="mb-4">Chempilot</h1>
         
         {{-- Content Section --}}
         @yield('content')
