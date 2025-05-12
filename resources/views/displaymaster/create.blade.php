@@ -1,0 +1,35 @@
+@extends('layouts.layout')
+
+@section('title', 'Create Display')
+
+@section('content')
+<div class="container mt-4">
+    <h2>Create Display</h2>
+    <form method="POST" action="{{ route('displaymaster.store') }}">
+        @csrf
+
+        <div class="mb-3">
+            <label for="DisplayName" class="form-label">Display Name</label>
+            <input type="text" name="DisplayName" class="form-control" value="{{ old('DisplayName') }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="ItemID" class="form-label">Item ID</label>
+            <input type="number" name="ItemID" class="form-control" value="{{ old('ItemID') }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="BranchID" class="form-label">Branch ID</label>
+            <input type="number" name="BranchID" class="form-control" value="{{ old('BranchID') }}" required>
+        </div>
+
+        <div class="form-check mb-3">
+            <input type="checkbox" name="IsActive" value="1" class="form-check-input" {{ old('IsActive') ? 'checked' : '' }}>
+            <label class="form-check-label">Is Active</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="{{ route('displaymaster.index') }}" class="btn btn-secondary">Back</a>
+    </form>
+</div>
+@endsection

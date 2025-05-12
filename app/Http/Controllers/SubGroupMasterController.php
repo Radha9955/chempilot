@@ -44,8 +44,9 @@ class SubGroupMasterController extends Controller
             'DiscountPct' => $request->DiscountPct,
             'TaxPct' => $request->TaxPct,
             'IsActive' => $request->has('IsActive') ? 1 : 0,
-            'CreatedDate' => now(),
-            'CreatedBy' => auth()->id(), // optional: if auth not used, hardcode 1
+            // 'CreatedDate' => now(),
+            // 'CreatedBy' => auth()->id(),
+             // optional: if auth not used, hardcode 1
         ]);
 
         return redirect()->route('subgroupmaster.index')->with('success', 'SubGroup created.');
@@ -90,8 +91,8 @@ class SubGroupMasterController extends Controller
         'DiscountPct' => $request->DiscountPct,
         'TaxPct' => $request->TaxPct,
         'IsActive' => $request->boolean('IsActive'),
-        'ModifiedDate' => now(),
-        'ModifiedBy' => auth()->id() ?? 1, // Default to 1 if no auth
+        // 'ModifiedDate' => now(),
+        // 'ModifiedBy' => auth()->id() ?? 1, // Default to 1 if no auth
     ]);
 
     return redirect()->route('subgroupmaster.index')->with('success', 'Sub Group updated successfully.');
