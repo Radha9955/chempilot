@@ -6,6 +6,9 @@ use App\Http\Controllers\ItemMasterController;
 use App\Http\Controllers\ProductMasterController;
 use App\Http\Controllers\DisplayMasterController;
 use App\Http\Controllers\BrandMasterController;
+use App\Http\Controllers\GSTMasterController;
+use App\Http\Controllers\HSNMasterController;
+use App\Http\Controllers\TaxMasterController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -23,3 +26,6 @@ Route::get('/subgroup/get-group', [ProductMasterController::class, 'getGroupBySu
 
 Route::resource('displaymaster', DisplayMasterController::class); // This was fixed
 Route::resource('brandmasters', BrandMasterController::class); // This was fixed
+Route::resource('gstmasters', GSTMasterController::class);
+Route::resource('hsnmasters', HSNMasterController::class);
+Route::resource('taxmasters', TaxMasterController::class);
