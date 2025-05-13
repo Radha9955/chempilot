@@ -31,12 +31,10 @@ Route::resource('productmaster', ProductMasterController::class);
 Route::get('/subgroup/get-group', [ProductMasterController::class, 'getGroupBySubgroup'])->name('productmaster.getGroupBySubgroup');
 
 Route::resource('displaymaster', DisplayMasterController::class); // This was fixed
-Route::resource('brandmasters', BrandMasterController::class); // This was fixed
-<<<<<<< HEAD
+Route::resource('brandmasters', BrandMasterController::class); // This wa
 Route::resource('gstmasters', GSTMasterController::class);
 Route::resource('hsnmasters', HSNMasterController::class);
 Route::resource('taxmasters', TaxMasterController::class);
-=======
 Route::resource('countrymaster', CountryMasterController::class);
 Route::resource('statemaster', StateMasterController::class);
 Route::resource('districtmaster', DistrictMasterController::class);
@@ -49,4 +47,4 @@ Route::resource('branchmaster', BranchMasterController::class);
 
 
 
->>>>>>> 355d4e8 (Work in progress: local changes before pulling)
+
