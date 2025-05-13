@@ -22,7 +22,6 @@
             <label for="CGST">CGST (%)</label>
             <input type="number" step="0.01" name="CGST" id="CGST" class="form-control" value="{{ old('CGST', $tax->CGST) }}" readonly>
         </div>
-
         <div class="form-group">
             <label for="SGST">SGST (%)</label>
             <input type="number" step="0.01" name="SGST" id="SGST" class="form-control" value="{{ old('SGST', $tax->SGST) }}" readonly>
