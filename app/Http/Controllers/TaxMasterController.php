@@ -44,7 +44,7 @@ class TaxMasterController extends Controller
         $data['SGST'] = $igst / 2;
 
         $data['CreatedDate'] = Carbon::now();
-        $data['CreatedBy'] = auth()->id() ?? 1;
+        // $data['CreatedBy'] = auth()->id() ?? 1;
         $data['IsActive'] = $request->has('IsActive') ? 1 : 0;
 
         TaxMaster::create($data);
@@ -80,7 +80,7 @@ class TaxMasterController extends Controller
         $cess = $request->input('CESS', 0);
         $isActive = $request->has('IsActive') ? 1 : 0;
         $modifiedDate = Carbon::now();
-        $modifiedBy = auth()->id() ?? 1;
+        // $modifiedBy = auth()->id() ?? 1;
         
         // Update using the model with correct ID
         $taxmaster->TaxName = $taxName;
@@ -90,7 +90,7 @@ class TaxMasterController extends Controller
         $taxmaster->CESS = $cess;
         $taxmaster->IsActive = $isActive;
         $taxmaster->ModifiedDate = $modifiedDate;
-        $taxmaster->ModifiedBy = $modifiedBy;
+        // $taxmaster->ModifiedBy = $modifiedBy;
         
         $taxmaster->save();
 
