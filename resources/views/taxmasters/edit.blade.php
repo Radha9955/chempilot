@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <h2>Edit Tax Master</h2>
 
-    <form action="{{ route('taxmasters.update', $tax->ID) }}" method="POST">
+    <form action="{{ route('taxmasters.update', ['taxmaster' => $tax->ID]) }}" method="POST">
         @csrf
         @method('PUT')
 

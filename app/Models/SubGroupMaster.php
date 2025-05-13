@@ -29,5 +29,5 @@ class SubGroupMaster extends Model
         'ModifiedDate' => 'datetime',
     ];
 
-    public $timestamps = false; // Disable Laravel's default timestamps
+    public $timestamps = false; // Disable Laravel's default timestamps if not needed
 }
