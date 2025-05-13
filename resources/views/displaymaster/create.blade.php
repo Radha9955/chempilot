@@ -13,10 +13,18 @@
             <input type="text" name="DisplayName" class="form-control" value="{{ old('DisplayName') }}" required>
         </div>
 
-        <div class="mb-3">
-            <label for="ItemID" class="form-label">Item ID</label>
-            <input type="number" name="ItemID" class="form-control" value="{{ old('ItemID') }}" required>
-        </div>
+       <div class="form-group mb-3">
+    <label for="ItemID">Item</label>
+    <select name="ItemID" id="ItemID" class="form-control" required>
+        <option value="">-- Select Item --</option>
+        @foreach($items as $item)
+            <option value="{{ $item->ID }}" 
+                {{ old('ItemID', $display->ItemID ?? '') == $item->ID ? 'selected' : '' }}>
+                {{ $item->ItemName }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
         <div class="mb-3">
             <label for="BranchID" class="form-label">Branch ID</label>

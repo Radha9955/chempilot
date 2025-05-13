@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\DisplayMaster;
+use App\Models\ItemMaster;
+
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -20,7 +22,8 @@ class DisplayMasterController extends Controller
     // Show the form to create a new record
     public function create()
     {
-        return view('displaymaster.create');
+     $items = ItemMaster::all(); // Fetch items for dropdown
+    return view('displaymaster.create', compact('items'));
     }
 
     // Store a new record
@@ -46,7 +49,8 @@ class DisplayMasterController extends Controller
     public function edit($id)
     {
         $display = DisplayMaster::findOrFail($id);
-        return view('displaymaster.edit', compact('display'));
+    $items = ItemMaster::all(); // Fetch items for dropdown
+    return view('displaymaster.edit', compact('display', 'items'));
     }
 
     // Update a record

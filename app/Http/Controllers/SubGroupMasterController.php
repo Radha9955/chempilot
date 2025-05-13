@@ -71,11 +71,18 @@ class SubGroupMasterController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        $subGroup = SubGroupMaster::findOrFail($id);
-        return view('subgroupmaster.edit', compact('subGroup'));
-    }
+    // public function edit(string $id)
+    // {
+    //     $subGroup = SubGroupMaster::findOrFail($id);
+    //     return view('subgroupmaster.edit', compact('subGroup'));
+    // }
+    public function edit($id)
+{
+    $subGroup = SubGroupMaster::findOrFail($id);
+    $groups = GroupMaster::all(); // To populate the dropdown
+
+    return view('subgroupmaster.edit', compact('subGroup', 'groups'));
+}
 
     /**
      * Update the specified resource in storage.

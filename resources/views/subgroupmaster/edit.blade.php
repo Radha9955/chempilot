@@ -1,10 +1,9 @@
-@extends('layouts.layout') {{-- Adjust to your layout --}}
+@extends('layouts.layout')
 
 @section('content')
-<div class="container">
-    <h2>{{ isset($subGroup) ? 'Edit Sub Group' : 'Create Sub Group' }}</h2>
+<div class="container mt-4">
+    <h2>Edit Sub Group</h2>
 
-    {{-- Show validation errors --}}
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -15,47 +14,48 @@
         </div>
     @endif
 
-    {{-- Edit form --}}
-    <form method="POST" 
-          action="{{ isset($subGroup) ? route('subgroupmaster.update', $subGroup->ID) : route('subgroupmaster.store') }}">
+    <form method="POST" action="{{ route('subgroupmaster.update', $subGroup->ID) }}">
         @csrf
-        @if(isset($subGroup)) 
-            @method('PUT') 
-        @endif
+        @method('PUT')
 
-        <div class="mb-3">
-            <label for="SubGroupName" class="form-label">Sub Group Name</label>
-            <input type="text" class="form-control" id="SubGroupName" name="SubGroupName" 
-                   value="{{ old('SubGroupName', $subGroup->SubGroupName ?? '') }}" required>
+        <div class="form-group mb-3">
+            <label for="SubGroupName">SubGroup Name</label>
+            <input type="text" name="SubGroupName" id="SubGroupName" class="form-control"
+                   value="{{ old('SubGroupName', $subGroup->SubGroupName) }}" required>
         </div>
 
-        <div class="mb-3">
-            <label for="GroupID" class="form-label">Group ID</label>
-            <input type="number" class="form-control" id="GroupID" name="GroupID" 
-                   value="{{ old('GroupID', $subGroup->GroupID ?? '') }}">
+        <div class="form-group mb-3">
+            <label for="GroupID">Group Name</label>
+            <select name="GroupID" id="GroupID" class="form-control" required>
+                <option value="">-- Select Group --</option>
+                @foreach($groups as $group)
+                    <option value="{{ $group->ID }}" 
+                        {{ old('GroupID', $subGroup->GroupID) == $group->ID ? 'selected' : '' }}>
+                        {{ $group->GroupName }}
+                    </option>
+                @endforeach
+            </select>
         </div>
 
-        <div class="mb-3">
-            <label for="DiscountPct" class="form-label">Discount %</label>
-            <input type="number" step="0.01" class="form-control" id="DiscountPct" name="DiscountPct" 
-                   value="{{ old('DiscountPct', $subGroup->DiscountPct ?? '') }}">
+        <div class="form-group mb-3">
+            <label for="DiscountPct">Discount (%)</label>
+            <input type="number" step="0.01" name="DiscountPct" id="DiscountPct" class="form-control"
+                   value="{{ old('DiscountPct', $subGroup->DiscountPct) }}">
         </div>
 
-        <div class="mb-3">
-            <label for="TaxPct" class="form-label">Tax %</label>
-            <input type="number" step="0.01" class="form-control" id="TaxPct" name="TaxPct" 
-                   value="{{ old('TaxPct', $subGroup->TaxPct ?? '') }}">
+        <div class="form-group mb-3">
+            <label for="TaxPct">Tax (%)</label>
+            <input type="number" step="0.01" name="TaxPct" id="TaxPct" class="form-control"
+                   value="{{ old('TaxPct', $subGroup->TaxPct) }}">
         </div>
 
-        <div class="form-check mb-3">
-            <input type="checkbox" class="form-check-input" id="IsActive" name="IsActive" value="1" 
-                   {{ old('IsActive', $subGroup->IsActive ?? false) ? 'checked' : '' }}>
-            <label class="form-check-label" for="IsActive">Active</label>
+        <div class="form-group mb-3 form-check">
+            <input type="checkbox" name="IsActive" value="1" id="IsActive" class="form-check-input"
+                   {{ old('IsActive', $subGroup->IsActive) ? 'checked' : '' }}>
+            <label class="form-check-label" for="IsActive">Is Active</label>
         </div>
 
-        <button type="submit" class="btn btn-primary">
-            {{ isset($subGroup) ? 'Update' : 'Save' }}
-        </button>
+        <button type="submit" class="btn btn-primary">Update Sub Group</button>
         <a href="{{ route('subgroupmaster.index') }}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
