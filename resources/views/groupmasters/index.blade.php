@@ -53,6 +53,11 @@
                 @endforeach
             </tbody>
         </table>
+
+        {{-- Pagination Links --}}
+        <div class="d-flex justify-content-center mt-4">
+            {!! $groups->links('pagination::bootstrap-5') !!}
+        </div>
     @endif
 
 @endsection

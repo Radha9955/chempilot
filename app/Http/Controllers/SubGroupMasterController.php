@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SubGroupMaster;
+use App\Models\GroupMaster;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth; // Import the Auth facade
 
 class SubGroupMasterController extends Controller
 {
@@ -13,7 +15,7 @@ class SubGroupMasterController extends Controller
      */
     public function index()
     {
-        $subGroups = SubGroupMaster::all();
+        $subGroups = SubGroupMaster::paginate(10); // Show 10 records per page
         return view('subgroupmaster.index', compact('subGroups'));
     }
 
@@ -22,7 +24,11 @@ class SubGroupMasterController extends Controller
      */
     public function create()
     {
-        return view('subgroupmaster.create');
+        // Fetch the groups from the database (adjust the model and logic as necessary)
+        $groups = GroupMaster::all();  // Fetch all groups, or adjust as needed
+
+        // Pass the groups to the view
+        return view('subgroupmaster.create', compact('groups'));
     }
 
     /**
@@ -30,26 +36,27 @@ class SubGroupMasterController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate incoming data
         $request->validate([
-            'SubGroupName' => 'required|string|max:255',
-            'GroupID' => 'nullable|integer',
+            'SubGroupName' => 'required',
+            'GroupID' => 'required|exists:GroupMaster,ID',  // Validate that the GroupID exists in GroupMaster table
             'DiscountPct' => 'nullable|numeric',
             'TaxPct' => 'nullable|numeric',
             'IsActive' => 'nullable|boolean',
         ]);
 
-        SubGroupMaster::create([
-            'SubGroupName' => $request->SubGroupName,
-            'GroupID' => $request->GroupID,
-            'DiscountPct' => $request->DiscountPct,
-            'TaxPct' => $request->TaxPct,
-            'IsActive' => $request->has('IsActive') ? 1 : 0,
-            // 'CreatedDate' => now(),
-            // 'CreatedBy' => auth()->id(),
-             // optional: if auth not used, hardcode 1
-        ]);
+        // Insert into SubGroupMaster
+        $subGroup = new SubGroupMaster;
+        $subGroup->SubGroupName = $request->input('SubGroupName');
+        $subGroup->GroupID = $request->input('GroupID');
+        $subGroup->DiscountPct = $request->input('DiscountPct');
+        $subGroup->TaxPct = $request->input('TaxPct');
+        $subGroup->IsActive = $request->has('IsActive') ? 1 : 0;
+        $subGroup->CreatedDate = now();
+        $subGroup->CreatedBy = Auth::check() ? Auth::id() : 1;  // Use fallback value if auth is not configured
+        $subGroup->save();
 
-        return redirect()->route('subgroupmaster.index')->with('success', 'SubGroup created.');
+        return redirect()->route('subgroupmaster.index')->with('success', 'SubGroup created successfully.');
     }
 
     /**
@@ -73,33 +80,30 @@ class SubGroupMasterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-  public function update(Request $request, $id)
-{
-    $request->validate([
-        'SubGroupName' => 'required|string|max:255',
-        'GroupID' => 'nullable|integer',
-        'DiscountPct' => 'nullable|numeric|between:0,99999999.99',
-        'TaxPct' => 'nullable|numeric|between:0,99999999.99',
-        'IsActive' => 'nullable|boolean',
-    ]);
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'SubGroupName' => 'required|string|max:255',
+            'GroupID' => 'nullable|integer',
+            'DiscountPct' => 'nullable|numeric|between:0,99999999.99',
+            'TaxPct' => 'nullable|numeric|between:0,99999999.99',
+            'IsActive' => 'nullable|boolean',
+        ]);
 
-    $subGroup = SubGroupMaster::findOrFail($id);
-    
-    $subGroup->update([
-        'SubGroupName' => $request->SubGroupName,
-        'GroupID' => $request->GroupID,
-        'DiscountPct' => $request->DiscountPct,
-        'TaxPct' => $request->TaxPct,
-        'IsActive' => $request->boolean('IsActive'),
-        // 'ModifiedDate' => now(),
-        // 'ModifiedBy' => auth()->id() ?? 1, // Default to 1 if no auth
-    ]);
+        $subGroup = SubGroupMaster::findOrFail($id);
 
-    return redirect()->route('subgroupmaster.index')->with('success', 'Sub Group updated successfully.');
-}
+        $subGroup->update([
+            'SubGroupName' => $request->SubGroupName,
+            'GroupID' => $request->GroupID,
+            'DiscountPct' => $request->DiscountPct,
+            'TaxPct' => $request->TaxPct,
+            'IsActive' => $request->boolean('IsActive'),
+            'ModifiedDate' => now(),
+            'ModifiedBy' => Auth::check() ? Auth::id() : 1, // Use fallback value if auth is not configured
+        ]);
 
-
-
+        return redirect()->route('subgroupmaster.index')->with('success', 'Sub Group updated successfully.');
+    }
 
     public function destroy(SubGroupMaster $subgroupmaster)
     {

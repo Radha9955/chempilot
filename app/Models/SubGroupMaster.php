@@ -11,7 +11,7 @@ class SubGroupMaster extends Model
 
     protected $fillable = [
         'SubGroupName',
-        'GroupID',
+        'GroupName', // Correct this if it is a reference to another table
         'DiscountPct',
         'TaxPct',
         'IsActive',
@@ -30,8 +30,4 @@ class SubGroupMaster extends Model
     ];
 
     public $timestamps = false; // Disable Laravel's default timestamps
-  public function group()
-{
-    return $this->belongsTo(GroupMaster::class, 'GroupID');  // Assuming 'GroupID' is the foreign key in SubGroupMaster table.
-}
 }
