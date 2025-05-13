@@ -49,6 +49,3 @@
         </form>
     </div>
 @endsection
-git add .
->> git commit -m "changes in all view sand subgroup dropdown"
->> git push origin main
