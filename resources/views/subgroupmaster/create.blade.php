@@ -1,20 +1,56 @@
-<form action="{{ route('subgroupmaster.store') }}" method="POST">
-    @csrf
+@extends('layouts.layout')
 
-    <label>SubGroup Name</label>
-    <input type="text" name="SubGroupName" required>
+@section('content')
+    <div class="container mt-4">
+        <h2>Add New Sub Group</h2>
 
-    <label>Group ID</label>
-    <input type="number" name="GroupID">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-    <label>Discount (%)</label>
-    <input type="number" step="0.01" name="DiscountPct">
+        <form action="{{ route('subgroupmaster.store') }}" method="POST">
+            @csrf
 
-    <label>Tax (%)</label>
-    <input type="number" step="0.01" name="TaxPct">
+            <div class="form-group mb-3">
+                <label for="SubGroupName">SubGroup Name</label>
+                <input type="text" name="SubGroupName" id="SubGroupName" class="form-control" value="{{ old('SubGroupName') }}" required>
+            </div>
 
-    <label>Is Active</label>
-    <input type="checkbox" name="IsActive" value="1">
+            <div class="form-group mb-3">
+                <label for="GroupID">Group Name</label>
+                <select name="GroupID" id="GroupID" class="form-control" required>
+                    <option value="">-- Select Group --</option>
+                    @foreach($groups as $group)
+                        <option value="{{ $group->ID }}" {{ old('GroupID') == $group->ID ? 'selected' : '' }}>
+                            {{ $group->GroupName }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
-    <button type="submit">Create</button>
-</form>
+            <div class="form-group mb-3">
+                <label for="DiscountPct">Discount (%)</label>
+                <input type="number" step="0.01" name="DiscountPct" id="DiscountPct" class="form-control" value="{{ old('DiscountPct') }}">
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="TaxPct">Tax (%)</label>
+                <input type="number" step="0.01" name="TaxPct" id="TaxPct" class="form-control" value="{{ old('TaxPct') }}">
+            </div>
+
+            <div class="form-group mb-3 form-check">
+                <input type="checkbox" name="IsActive" value="1" id="IsActive" class="form-check-input" {{ old('IsActive') ? 'checked' : '' }}>
+                <label class="form-check-label" for="IsActive">Is Active</label>
+            </div>
+
+            <button type="submit" class="btn btn-success">Save Sub Group</button>
+            <a href="{{ route('subgroupmaster.index') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+@endsection

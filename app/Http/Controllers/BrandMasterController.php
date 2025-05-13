@@ -7,11 +7,12 @@ use App\Models\BrandMaster;
 
 class BrandMasterController extends Controller
 {
-    public function index()
-    {
-        $brands = BrandMaster::all();
-        return view('brandmasters.index', compact('brands'));
-    }
+public function index()
+{
+    $brands = BrandMaster::paginate(10); // 10 items per page
+    return view('brandmasters.index', compact('brands'));
+}
+
 
     public function create()
     {

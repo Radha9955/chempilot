@@ -6,12 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\GroupMaster;
 
 class GroupMasterController extends Controller
+{public function index()
 {
-public function index()
-{
-    $groups = GroupMaster::all(); // Fetch all group records
-
-    return view('groupmasters.index', compact('groups')); // Pass to view
+    $groups = GroupMaster::paginate(10); // Show 10 records per page
+    return view('groupmasters.index', compact('groups'));
 }
 
     public function create()

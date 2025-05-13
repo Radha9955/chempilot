@@ -12,5 +12,5 @@ Route::get('/', function () {
 // Define resource routes for the controllers
 Route::resource('groupmasters', GroupMasterController::class);
 Route::resource('itemmasters', ItemMasterController::class); // Make sure to use the correct plural naming
-Route::resource('subgroupmasters', SubGroupMasterController::class); // Corrected plural name
+Route::resource('subgroupmaster', SubGroupMasterController::class); // Corrected plural name
 Route::resource('brandmasters', BrandMasterController::class); // Add the route for brandmasters

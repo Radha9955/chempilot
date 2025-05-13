@@ -11,7 +11,7 @@ class SubGroupMaster extends Model
 
     protected $fillable = [
         'SubGroupName',
-        'GroupID',
+        'GroupName', // Correct this if it is a reference to another table
         'DiscountPct',
         'TaxPct',
         'IsActive',
@@ -29,5 +29,5 @@ class SubGroupMaster extends Model
         'ModifiedDate' => 'datetime',
     ];
 
-    public $timestamps = false; // Disable Laravel's default timestamps
+    public $timestamps = false; // Disable Laravel's default timestamps if not needed
 }
