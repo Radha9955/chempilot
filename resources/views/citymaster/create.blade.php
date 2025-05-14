@@ -29,10 +29,17 @@
         </div>
 
         <div class="mb-3">
-            <label for="DistrictID" class="form-label">District</label>
-            <select class="form-control" name="DistrictID" id="DistrictID" required>
-                <option value="">-- Select District --</option>
-            </select>
+           <label for="DistrictID" class="mt-2">District</label><span class="text-danger">*</span>
+<select id="DistrictID" name="DistrictID" class="form-control" required>
+    <option disabled selected>-- Select District --</option>
+    @if(isset($districts))
+        @foreach($districts as $district)
+            <option value="{{ $district->ID }}" {{ old('DistrictID', $city->DistrictID ?? '') == $district->ID ? 'selected' : '' }}>
+                {{ $district->DistrictName }}
+            </option>
+        @endforeach
+    @endif
+</select>
         </div>
 
         <div class="form-check mb-3">
@@ -46,27 +53,31 @@
 </div>
 
 @section('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $('#StateID').on('change', function() {
-        var stateID = $(this).val();
-        if (stateID) {
-            $.ajax({
-                url: "{{ url('get-districts') }}/" + stateID,
-                type: "GET",
-                dataType: "json",
-                success: function(data) {
-                    $('#DistrictID').empty();
-                    $('#DistrictID').append('<option value="">-- Select District --</option>');
-                    $.each(data, function(key, value) {
-                        $('#DistrictID').append('<option value="'+ value.ID +'">'+ value.DistrictName +'</option>');
-                    });
-                }
-            });
-        } else {
-            $('#DistrictID').empty();
-            $('#DistrictID').append('<option value="">-- Select District --</option>');
-        }
+    $(document).ready(function() {
+        $('#StateID').change(function() {
+            let stateID = $(this).val();
+            if (stateID) {
+                $.ajax({
+                    url: '/get-districts/' + stateID,
+                    type: 'GET',
+                    success: function(data) {
+                        let districtSelect = $('#DistrictID');
+                        districtSelect.empty();
+                        districtSelect.append('<option disabled selected>-- Select District --</option>');
+                        $.each(data, function(key, district) {
+                            districtSelect.append('<option value="' + district.ID + '">' + district.DistrictName + '</option>');
+                        });
+                    },
+                    error: function() {
+                        alert('Unable to load districts.');
+                    }
+                });
+            }
+        });
     });
 </script>
+
 @endsection
 @endsection

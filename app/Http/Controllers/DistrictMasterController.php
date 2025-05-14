@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\DistrictMaster;
+use App\Models\StateMaster;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +18,8 @@ class DistrictMasterController extends Controller
 
     public function create()
     {
-        return view('districtmaster.create');
+          $states = StateMaster::all(); // fetch all states
+    return view('districtmaster.create', compact('states'));
     }
 
     public function store(Request $request)
@@ -38,10 +40,13 @@ class DistrictMasterController extends Controller
     }
 
     public function edit($id)
-    {
-        $district = DistrictMaster::findOrFail($id);
-        return view('districtmaster.edit', compact('district'));
-    }
+{
+    $district = DistrictMaster::findOrFail($id);
+    $states = StateMaster::all(); // Fetch all states for dropdown
+
+    return view('districtmaster.edit', compact('district', 'states'));
+}
+
 
     public function update(Request $request, $id)
     {

@@ -20,8 +20,15 @@
         </div>
 
         <div class="mb-3">
-            <label for="StateID" class="form-label">State ID</label>
-            <input type="number" class="form-control" name="StateID" id="StateID" value="{{ old('StateID', $district->StateID) }}" required>
+            <label for="StateID" class="form-label">State</label>
+            <select name="StateID" id="StateID" class="form-control" required>
+                <option disabled selected>-- Select State --</option>
+                @foreach ($states as $state)
+                    <option value="{{ $state->ID }}" {{ (old('StateID', $district->StateID) == $state->ID) ? 'selected' : '' }}>
+                        {{ $state->StateName }}
+                    </option>
+                @endforeach
+            </select>
         </div>
 
         <div class="form-check mb-3">

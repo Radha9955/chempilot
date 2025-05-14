@@ -50,7 +50,7 @@ class CompanyMasterController extends Controller
         }
 
         $validated['CreatedDate'] = now();
-        $validated['CreatedBy'] = auth()->id() ?? 1;
+        // $validated['CreatedBy'] = auth()->id() ?? 1;
 
         CompanyMaster::create($validated);
 
@@ -93,7 +93,7 @@ class CompanyMasterController extends Controller
             }
 
             $validated['ModifiedDate'] = now();
-            $validated['ModifiedBy'] = auth()->id() ?? 1;
+            // $validated['ModifiedBy'] = auth()->id() ?? 1;
             $validated['IsActive'] = $request->has('IsActive') ? 1 : 0;
 
             $company = CompanyMaster::findOrFail($id);
@@ -101,7 +101,7 @@ class CompanyMasterController extends Controller
 
             return redirect()->route('companymasters.index')->with('success', 'Company updated successfully.');
         } catch (\Exception $e) {
-            \Log::error('Company update error', ['error' => $e->getMessage()]);
+            // \Log::error('Company update error', ['error' => $e->getMessage()]);
             return redirect()->back()->withErrors('Error updating company. Please try again.')->withInput();
         }
     }

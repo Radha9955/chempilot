@@ -18,9 +18,16 @@
             <input type="text" class="form-control" name="StateName" id="StateName" value="{{ old('StateName') }}" required>
         </div>
 
-        <div class="mb-3">
-            <label for="CountryID" class="form-label">Country ID</label>
-            <input type="number" class="form-control" name="CountryID" id="CountryID" value="{{ old('CountryID') }}" required>
+       <div class="mb-3">
+            <label for="CountryID" class="form-label">Country</label>
+            <select name="CountryID" id="CountryID" class="form-select" required>
+                <option value="" disabled selected>-- Select Country --</option>
+                @foreach($countries as $country)
+                    <option value="{{ $country->ID }}" {{ old('CountryID') == $country->ID ? 'selected' : '' }}>
+                        {{ $country->CountryName }}
+                    </option>
+                @endforeach
+            </select>
         </div>
 
         <div class="mb-3">

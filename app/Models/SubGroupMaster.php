@@ -11,7 +11,7 @@ class SubGroupMaster extends Model
 
     protected $fillable = [
         'SubGroupName',
-        'GroupName', // Correct this if it is a reference to another table
+        'GroupID', // Changed from GroupName to GroupID
         'DiscountPct',
         'TaxPct',
         'IsActive',
@@ -30,4 +30,9 @@ class SubGroupMaster extends Model
     ];
 
     public $timestamps = false; // Disable Laravel's default timestamps if not needed
+
+    public function group()
+    {
+        return $this->belongsTo(GroupMaster::class, 'GroupID', 'ID'); // Define the relationship
+    }
 }

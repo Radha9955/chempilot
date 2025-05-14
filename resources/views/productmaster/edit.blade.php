@@ -72,6 +72,50 @@
 @endsection
 
 @section('scripts')
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('js/productmaster.js') }}"></script>
+   <script>
+    $(document).ready(function () {
+        function fetchGroupName(subgroupId) {
+            if (!subgroupId) return;
+
+            $.ajax({
+                url: "/subgroup/get-group",
+                type: "GET",
+                data: { subgroup_id: subgroupId },
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    if (data && data.group_name !== undefined) {
+                        $("#GroupName").val(data.group_name);
+                    } else {
+                        $("#GroupName").val(''); // fallback if no group found
+                        console.warn("Group name not found.");
+                    }
+                },
+                error: function (error) {
+                    console.error('Error fetching Group data: ', error);
+                }
+            });
+        }
+
+        // On change of SubGroup
+        $("#SubGroupID").change(function () {
+            var selectedSubGroupId = $(this).val();
+            fetchGroupName(selectedSubGroupId);
+        });
+
+        // 👇 Fetch GroupName on page load
+        var initialSubGroupId = $("#SubGroupID").val();
+        if (initialSubGroupId) {
+            fetchGroupName(initialSubGroupId);
+        }
+    });
+</script>
+
+    <script src="{{ asset('resources/js/productmaster.js') }}"></script>
 @endsection

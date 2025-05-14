@@ -43,7 +43,8 @@ Route::resource('citymaster', CityMasterController::class);
 
 // Route for getting districts based on state
 // web.php (or api.php)
-Route::get('/get-districts/{stateID}', [CityMasterController::class, 'getDistricts']);
+Route::get('/get-districts/{stateID}', [CityMasterController::class, 'getDistricts'])->name('citymaster.getDistricts');
+
 Route::resource('branchmaster', BranchMasterController::class);
 Route::resource('companymasters', CompanyMasterController::class);
 

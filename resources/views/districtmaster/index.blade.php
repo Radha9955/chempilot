@@ -38,6 +38,6 @@
         </tbody>
     </table>
 
-    {{ $districts->links() }}
+ 
 </div>
 @endsection

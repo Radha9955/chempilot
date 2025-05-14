@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ItemMaster;
+use App\Models\ProductMaster;
+
 use Illuminate\Database\QueryException;
 
 
@@ -27,7 +29,8 @@ class ItemMasterController extends Controller
     // Show form to create a new item
     public function create()
     {
-        return view('itemmaster.create');
+       $products = ProductMaster::all();
+        return view('itemmaster.create', compact('products'));
     }
 
     // Store new item
@@ -40,8 +43,10 @@ class ItemMasterController extends Controller
     // Show form to edit an item
     public function edit($id)
     {
-        $item = ItemMaster::findOrFail($id);
-        return view('itemmaster.edit', compact('item'));
+          $item = ItemMaster::findOrFail($id);
+        // Fetch all products for the dropdown
+        $products = ProductMaster::all();
+        return view('itemmaster.edit', compact('item', 'products'));
     }
 
     // Update the item
