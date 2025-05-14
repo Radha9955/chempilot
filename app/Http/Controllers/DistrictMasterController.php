@@ -7,6 +7,8 @@ use App\Models\DistrictMaster;
 use App\Models\StateMaster;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
+
 
 class DistrictMasterController extends Controller
 {
@@ -68,9 +70,19 @@ class DistrictMasterController extends Controller
         return redirect()->route('districtmaster.index')->with('success', 'District updated.');
     }
 
-    public function destroy($id)
-    {
+ public function destroy($id)
+{
+    try {
         DistrictMaster::destroy($id);
         return redirect()->route('districtmaster.index')->with('success', 'District deleted.');
+    } catch (QueryException $e) {
+        if ($e->getCode() == '23000') { // Integrity constraint violation
+            return redirect()->route('districtmaster.index')
+                ->with('error', 'Cannot delete this district because it is associated with other records.');
+        }
+
+        return redirect()->route('districtmaster.index')
+            ->with('error', 'An unexpected error occurred while deleting the district.');
     }
+}
 }

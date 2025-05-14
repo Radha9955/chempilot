@@ -7,6 +7,7 @@ use App\Models\CityMaster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
 
 class BranchMasterController extends Controller
 {
@@ -67,9 +68,18 @@ class BranchMasterController extends Controller
         return redirect()->route('branchmaster.index')->with('success', 'Branch updated.');
     }
 
-    public function destroy($id)
-    {
+  public function destroy($id)
+{
+    try {
         BranchMaster::destroy($id);
         return redirect()->route('branchmaster.index')->with('success', 'Branch deleted.');
+    } catch (QueryException $e) {
+        // Check for foreign key constraint error code (SQL Server/ MySQL)
+        if ($e->getCode() == '23000') {
+            return redirect()->route('branchmaster.index')->with('error', 'Cannot delete this branch because it is associated with other records.');
+        }
+
+        return redirect()->route('branchmaster.index')->with('error', 'An unexpected error occurred.');
     }
+}
 }

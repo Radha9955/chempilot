@@ -6,9 +6,21 @@
 
     <a href="{{ route('branchmaster.create') }}" class="btn btn-primary mb-3">Add Branch</a>
 
-    @if(session('success'))
+    <!-- @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+    @endif -->
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
 
     <table class="table table-bordered">
         <thead>

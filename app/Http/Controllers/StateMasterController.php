@@ -7,6 +7,8 @@ use App\Models\CountryMaster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use Illuminate\Database\QueryException; // Add this at the top if not already included
+
 
 class StateMasterController extends Controller
 {
@@ -69,8 +71,18 @@ class StateMasterController extends Controller
     }
 
     public function destroy($id)
-    {
+{
+    try {
         StateMaster::destroy($id);
-        return redirect()->route('statemaster.index')->with('success', 'State deleted.');
+        return redirect()->route('statemaster.index')->with('success', 'State deleted successfully.');
+    } catch (QueryException $e) {
+        if ($e->getCode() == '23000') { // Foreign key constraint violation
+            return redirect()->route('statemaster.index')
+                ->with('error', 'Cannot delete this state because it is associated with other records.');
+        }
+
+        return redirect()->route('statemaster.index')
+            ->with('error', 'An unexpected error occurred while deleting the state.');
     }
+}
 }

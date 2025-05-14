@@ -5,9 +5,14 @@
     <h2>District List</h2>
     <a href="{{ route('districtmaster.create') }}" class="btn btn-primary mb-3">Add District</a>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+   @if (session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
+@if (session('error'))
+    <div class="alert alert-danger">{{ session('error') }}</div>
+@endif
+
 
     <table class="table table-bordered">
         <thead>

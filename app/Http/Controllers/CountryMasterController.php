@@ -80,13 +80,20 @@ class CountryMasterController extends Controller
         }
     }
 
-    public function destroy($id)
-    {
-        try {
-            CountryMaster::destroy($id);
-            return redirect()->route('countrymaster.index')->with('success', 'Country deleted.');
-        } catch (QueryException $e) {
-            return back()->with('error', 'Failed to delete country. It may be in use.');
+   public function destroy($id)
+{
+    try {
+        CountryMaster::destroy($id);
+        return redirect()->route('countrymaster.index')->with('success', 'Country deleted successfully.');
+    } catch (QueryException $e) {
+        if ($e->getCode() == '23000') { // Foreign key constraint violation
+            return redirect()->route('countrymaster.index')
+                ->with('error', 'Cannot delete this country because it is associated with other records.');
         }
+
+        return redirect()->route('countrymaster.index')
+            ->with('error', 'An unexpected error occurred while deleting the country.');
     }
+}
+
 }

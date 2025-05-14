@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\StateMaster;
+use Illuminate\Database\QueryException;
+
 
 class CityMasterController extends Controller
 {
@@ -77,10 +79,19 @@ class CityMasterController extends Controller
     }
 
     public function destroy($id)
-    {
+{
+    try {
         CityMaster::destroy($id);
         return redirect()->route('citymaster.index')->with('success', 'City deleted.');
+    } catch (QueryException $e) {
+        if ($e->getCode() == '23000') { // SQL Server/MySQL foreign key violation
+            return redirect()->route('citymaster.index')
+                ->with('error', 'Cannot delete this city because it is associated with other records.');
+        }
+
+        return redirect()->route('citymaster.index')->with('error', 'An unexpected error occurred while deleting the city.');
     }
+}
 
     // Fetch districts based on selected state using AJAX
   public function getDistricts($stateID)
