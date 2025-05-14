@@ -12,7 +12,14 @@
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
 
-        <a href="{{ route('brandmasters.create') }}" class="btn btn-primary mb-3">Add New Brand</a>
+  <div class="text-end mb-3">
+    <a href="{{ route('brandmasters.create') }}" class="btn btn-primary">
+        Add New Brand
+    </a>
+</div>
+
+
+
 
         <table class="table table-bordered">
             <thead>

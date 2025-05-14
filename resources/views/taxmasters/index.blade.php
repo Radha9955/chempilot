@@ -4,9 +4,12 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 class="mb-0">Tax Masters</h2>
-        <a href="{{ route('taxmasters.create') }}" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Create New
-        </a>
+      <div class="d-flex justify-content-end mb-3">
+    <a href="{{ route('taxmasters.create') }}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Create New
+    </a>
+</div>
+
     </div>
 
     @if(session('success'))

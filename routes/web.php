@@ -15,6 +15,7 @@ use App\Http\Controllers\StateMasterController;
 use App\Http\Controllers\DistrictMasterController;
 use App\Http\Controllers\CityMasterController;
 use App\Http\Controllers\BranchMasterController;
+use App\Http\Controllers\CompanyMasterController;
 
 
 
@@ -44,7 +45,7 @@ Route::resource('citymaster', CityMasterController::class);
 // web.php (or api.php)
 Route::get('/get-districts/{stateID}', [CityMasterController::class, 'getDistricts']);
 Route::resource('branchmaster', BranchMasterController::class);
-
+Route::resource('companymasters', CompanyMasterController::class);
 
 
 

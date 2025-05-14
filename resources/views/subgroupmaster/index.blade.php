@@ -12,7 +12,12 @@
         <div class="alert alert-danger">{{ session('error') }}</div>
     @endif
 
-    <a href="{{ route('subgroupmaster.create') }}" class="btn btn-primary mb-3">Create New SubGroup</a>
+    <div class="d-flex justify-content-end mb-3">
+    <a href="{{ route('subgroupmaster.create') }}" class="btn btn-primary">
+        Create New SubGroup
+    </a>
+</div>
+
 
     <table class="table table-bordered">
         <thead class="table-light">
